@@ -13,36 +13,25 @@ function App() {
 
   function handleTaskRemoval (taskToDelete) {
     const tempArray = [...currentTasks];
-    const removeTask = tempArray.filter((task) => {
-      if (task.text !== taskToDelete) {
-        return true;
-      } else {
-        return false;
-      }
-    })
+    const removeTask = tempArray.filter((task) => task.text !== taskToDelete);
     setCurrentTasks(removeTask);
   }
 
   function handleCategoryChange (event) {
+    debugger;
     setCategoryFilter(event.target.textContent);
   }
-
-  function categoryTypes () {
-    currentCategories.map((category) => {
-      return ( <option>{category}</option>);
-    })
-  }
   
-  function handleSubmit(element) {
-    setCurrentTasks([...currentTasks, element]);
+  function handleSubmit(task) {
+    setCurrentTasks([...currentTasks, task]);
   }
 
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter onHandleCategoryChange={handleCategoryChange} currentCategories={currentCategories}/>
-      <NewTaskForm onCategoryTypes={categoryTypes} onHandleSubmit={handleSubmit}/>
-      <TaskList currentTasks={currentTasks} categoryFilter={categoryFilter} handleTaskRemoval={handleTaskRemoval}/>
+      <CategoryFilter onHandleCategoryChange={handleCategoryChange} categories={currentCategories} categoryFilter={categoryFilter}/>
+      <NewTaskForm categories={currentCategories} onTaskFormSubmit={handleSubmit}/>
+      <TaskList tasks={currentTasks} categoryFilter={categoryFilter} handleTaskRemoval={handleTaskRemoval}/>
     </div>
   );
 }

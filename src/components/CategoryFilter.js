@@ -1,21 +1,25 @@
 import React from "react";
 
-function CategoryFilter({ onHandleCategoryChange, currentCategories }) {
+function CategoryFilter({ onHandleCategoryChange, categories, categoryFilter }) {
 
-const taskList = currentCategories.map((option) => {
-  return (
-  <button 
-    key={option} 
-    onClick={onHandleCategoryChange}>
-      {option}
-  </button>
-  )
-})
+  const categoryOptions = categories.map((option) => {
+
+    const buttonClass = option === categoryFilter ? "selected" : null;
+
+    return (
+      <button 
+        key={option} 
+        onClick={onHandleCategoryChange}
+        className={buttonClass}>    
+          {option}
+      </button>
+      )
+  })
 
   return (
     <div className="categories" >
       <h5> Category filters</h5>
-        { taskList }
+        { categoryOptions }
     </div>
   );
 }

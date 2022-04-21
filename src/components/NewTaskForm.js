@@ -1,28 +1,24 @@
 import React, {useState} from "react";
 
-function NewTaskForm({onCategoryTypes, onHandleSubmit}) {
+function NewTaskForm({categories, onTaskFormSubmit}) {
 
   const [text, setText] = useState("");
   const [category, setCategory] = useState("");
 
-function localHandleSubmit(event) {
-  event.preventDefault();
-  onHandleSubmit({text, category});
-}
+  const localHandleSubmit = (event) => {
+    event.preventDefault();
+    onTaskFormSubmit({text, category});
+  }
 
-function handleNameAdd(event) {
-  setText(event.target.value);
-}
+  const handleNameAdd = (event) => {
+    setText(event.target.value);
+  }
 
-function handleCategoryAdd(event) {
-  setCategory(event.target.value);
-}
+  const handleCategoryAdd = (event) => {
+    setCategory(event.target.value);
+  }
 
-function renderCategories() {
-  onCategoryTypes.map((category) => {
-    ( <option>{category}</option>
-    )})
-}
+  const renderCategories = categories.filter(c => c !== "All").map((category) => <option>{category}</option>)
 
   return (
     <form className="new-task-form" onSubmit={localHandleSubmit}>

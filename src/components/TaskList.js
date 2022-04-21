@@ -1,25 +1,17 @@
 import React from "react";
 import Task from "./Task";
 
-function TaskList({ currentTasks, categoryFilter, handleTaskRemoval }) {
+function TaskList({ tasks, categoryFilter, handleTaskRemoval }) {
 
-console.log(currentTasks);
-const itemsToFilter = currentTasks.filter((task) => {
-  console.log(task);
-  if (categoryFilter === "All") {
-    return true;
-  } else {
-    return task.category === categoryFilter;
-  }
-})
+const itemsToFilter = tasks.filter((item) => categoryFilter === "All" || item.category === categoryFilter );
 
-const taskList = itemsToFilter.map((item) => {
+const task = itemsToFilter.map((item) => {
   return <Task key={item.text} text={item.text} category={item.category} handleTaskRemoval={handleTaskRemoval}/>
 })
 
   return (
     <div className="tasks">
-      { taskList }
+      { task }
     </div>
   )};
 
