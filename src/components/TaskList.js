@@ -3,7 +3,9 @@ import Task from "./Task";
 
 function TaskList({ currentTasks, categoryFilter, handleTaskRemoval }) {
 
+console.log(currentTasks);
 const itemsToFilter = currentTasks.filter((task) => {
+  console.log(task);
   if (categoryFilter === "All") {
     return true;
   } else {
@@ -11,13 +13,15 @@ const itemsToFilter = currentTasks.filter((task) => {
   }
 })
 
+const taskList = itemsToFilter.map((item) => {
+  return <Task key={item.text} text={item.text} category={item.category} handleTaskRemoval={handleTaskRemoval}/>
+})
+
   return (
     <div className="tasks">
-      {/* display a list of tasks using Task component */}
-      { itemsToFilter.map((item, index) =>
-        <Task key={index} name={item.text} category={item.category} handleTaskRemoval={handleTaskRemoval}/>
-      )}
+      { taskList }
     </div>
   )};
+
 
 export default TaskList;

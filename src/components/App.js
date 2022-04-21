@@ -4,33 +4,44 @@ import NewTaskForm from "./NewTaskForm";
 import TaskList from "./TaskList";
 
 import { CATEGORIES, TASKS } from "../data";
-// console.log("Here's the data you're working with");
-// console.log({ CATEGORIES, TASKS });
 
 function App() {
 
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [currentTasks, setCurrentTasks] = useState(TASKS);
-  const [currentCategories, setCUrrentCategories] = useState(CATEGORIES);
+  const [currentCategories, setCurrentCategories] = useState(CATEGORIES);
 
-  function handleTaskRemoval (element) {
-    console.log(element);
+  function handleTaskRemoval (taskToDelete) {
     const tempArray = [...currentTasks];
-    const tempIndex = tempArray.indexOf(element.target.value);
-    // console.log(tempIndex);
-
+    const removeTask = tempArray.filter((task) => {
+      if (task.text !== taskToDelete) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    setCurrentTasks(removeTask);
   }
 
   function handleCategoryChange (event) {
-    console.log(event.target.textContent);
     setCategoryFilter(event.target.textContent);
+  }
+
+  function categoryTypes () {
+    currentCategories.map((category) => {
+      return ( <option>{category}</option>);
+    })
+  }
+  
+  function handleSubmit(element) {
+    setCurrentTasks([...currentTasks, element]);
   }
 
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter onHandleCategoryChange={handleCategoryChange} categoryFilter={categoryFilter} currentCategories={currentCategories}/>
-      <NewTaskForm />
+      <CategoryFilter onHandleCategoryChange={handleCategoryChange} currentCategories={currentCategories}/>
+      <NewTaskForm onCategoryTypes={categoryTypes} onHandleSubmit={handleSubmit}/>
       <TaskList currentTasks={currentTasks} categoryFilter={categoryFilter} handleTaskRemoval={handleTaskRemoval}/>
     </div>
   );
